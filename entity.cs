@@ -8,13 +8,20 @@ using System.Collections.Generic;
 
 public class Entity
 {
-    public int x;
-    public int y;
+    public Entity(){}
+    public int coordX { get; set; }
+    public int coordY { get; set; }
 
-    public void Set(int newX, int newY)
+    public Entity(int x, int y)
     {
-        x = newX;
-        y = newY;
+        coordX = x;
+        coordY = y;
+    }
+
+    public void SetPosition(int x , int y)
+    {
+        coordX = x;
+        coordY = y;
     }
 
 }
