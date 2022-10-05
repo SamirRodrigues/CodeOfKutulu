@@ -1,3 +1,11 @@
+using System;
+using System.Linq;
+using System.IO;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+
+
 using Entity;
 
 /**
@@ -67,14 +75,15 @@ class Player
             
             foreach (Entity enemy in enemies)
             {
-                if((Math.Abs(enemy.coordX - player.coordX) + Math.Abs(enemy.coordX - player.coordY)) < distance)
+                if(((int)Math.Sqrt( Math.Pow((enemy.coordX - player.coordX),2) + Math.Pow((enemy.coordX - player.coordY),2))  ) < distance)
                 {
-                    distance = (Math.Abs(enemy.coordX - player.coordX) + Math.Abs(enemy.coordX - player.coordY));
+                    distance = (int)Math.Sqrt( Math.Pow((enemy.coordX - player.coordX),2) + Math.Pow((enemy.coordX - player.coordY),2));
                     closerEnemy.SetPosition(enemy.coordX,enemy.coordY);
                 }
             }
 
-            Console.Error.WriteLine("CLOSER ENEMY: " + closerEnemy.coordX + " " + closerEnemy.coordY + " " + distance);   
+            Console.Error.WriteLine("CLOSER ENEMY: " + closerEnemy.coordX + " " + closerEnemy.coordY);   
+            Console.Error.WriteLine("Distance: " + distance);   
 
 
 
@@ -84,17 +93,16 @@ class Player
 
             //Console.WriteLine("WAIT"); // MOVE <x> <y> | WAIT
 
-            foreach (Entity ally in allies)
+            if(distance < 3)
+            {                
+                player.SetPosition(allies[1].coordX - closerEnemy.coordX, allies[1].coordY - closerEnemy.coordY);
+            }
+            else
             {
-                Console.Error.WriteLine("Ally: " + ally.coordX + " " + ally.coordY);                
+                player.SetPosition(allies[1].coordX,allies[1].coordY);
             }
             
-            foreach (Entity enemy in enemies)
-            {
-                Console.Error.WriteLine("Enemy: " + enemy.coordX + " " + enemy.coordY);  
-            }
-            
-            Console.WriteLine("MOVE" + " " + allies[1].coordX + " " + allies[1].coordY); // MOVE <x> <y> | WAIT
+            Console.WriteLine("MOVE" + " " + player.coordX + " " + player.coordY); // MOVE <x> <y> | WAIT
 
         }
     }
